@@ -14,6 +14,9 @@
 		5C06A43E23A3333800EAA0EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C06A43C23A3333800EAA0EB /* LaunchScreen.storyboard */; };
 		5C06A44123A3333800EAA0EB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C06A44023A3333800EAA0EB /* main.m */; };
 		5C06A44923A3352900EAA0EB /* TaxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C06A44823A3352900EAA0EB /* TaxCell.m */; };
+		848B680F26EAFD9F00831E03 /* TaxLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B680E26EAFD9F00831E03 /* TaxLevel.m */; };
+		848B681226EB086600831E03 /* MonthTax.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B681126EB086600831E03 /* MonthTax.m */; };
+		848B681526EB1E3400831E03 /* SalaryConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 848B681426EB1E3400831E03 /* SalaryConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,12 @@
 		5C06A44023A3333800EAA0EB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5C06A44723A3352900EAA0EB /* TaxCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxCell.h; sourceTree = "<group>"; };
 		5C06A44823A3352900EAA0EB /* TaxCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxCell.m; sourceTree = "<group>"; };
+		848B680D26EAFD9F00831E03 /* TaxLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TaxLevel.h; sourceTree = "<group>"; };
+		848B680E26EAFD9F00831E03 /* TaxLevel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TaxLevel.m; sourceTree = "<group>"; };
+		848B681026EB086600831E03 /* MonthTax.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonthTax.h; sourceTree = "<group>"; };
+		848B681126EB086600831E03 /* MonthTax.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonthTax.m; sourceTree = "<group>"; };
+		848B681326EB1E3400831E03 /* SalaryConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SalaryConfig.h; sourceTree = "<group>"; };
+		848B681426EB1E3400831E03 /* SalaryConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SalaryConfig.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +76,12 @@
 				5C06A43523A3333600EAA0EB /* ViewController.m */,
 				5C06A44723A3352900EAA0EB /* TaxCell.h */,
 				5C06A44823A3352900EAA0EB /* TaxCell.m */,
+				848B681026EB086600831E03 /* MonthTax.h */,
+				848B681126EB086600831E03 /* MonthTax.m */,
+				848B680D26EAFD9F00831E03 /* TaxLevel.h */,
+				848B680E26EAFD9F00831E03 /* TaxLevel.m */,
+				848B681326EB1E3400831E03 /* SalaryConfig.h */,
+				848B681426EB1E3400831E03 /* SalaryConfig.m */,
 				5C06A43723A3333600EAA0EB /* Main.storyboard */,
 				5C06A43A23A3333800EAA0EB /* Assets.xcassets */,
 				5C06A43C23A3333800EAA0EB /* LaunchScreen.storyboard */,
@@ -148,7 +163,10 @@
 			files = (
 				5C06A43623A3333600EAA0EB /* ViewController.m in Sources */,
 				5C06A44923A3352900EAA0EB /* TaxCell.m in Sources */,
+				848B680F26EAFD9F00831E03 /* TaxLevel.m in Sources */,
+				848B681226EB086600831E03 /* MonthTax.m in Sources */,
 				5C06A43023A3333600EAA0EB /* AppDelegate.m in Sources */,
+				848B681526EB1E3400831E03 /* SalaryConfig.m in Sources */,
 				5C06A44123A3333800EAA0EB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

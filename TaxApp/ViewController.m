@@ -8,101 +8,84 @@
 
 #import "ViewController.h"
 #import "TaxCell.h"
+#import "MonthTax.h"
+
+#define TAX_BASE  5000
 
 @interface ViewController ()<UITableViewDelegate , UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *specialTF;
 @property (weak, nonatomic) IBOutlet UITextField *insuranceTF;
-@property (weak, nonatomic) IBOutlet UITextField *reserveFundTF;
 @property (weak, nonatomic) IBOutlet UITextField *salaryTF;
+@property (weak, nonatomic) IBOutlet UITextField *houseFundTF;
 
-@property (nonatomic ,assign) CGFloat preTaxSum ;
-@property (nonatomic ,assign) CGFloat fastCaculate ;
-@property (nonatomic ,assign) CGFloat rate ;
+@property (nonatomic ,strong) NSMutableArray  <MonthTax *>* lasts;
 @end
+
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _preTaxSum = 0.f ;
     
 }
 - (IBAction)caculate:(UIBarButtonItem *)sender {
     [self.view endEditing:YES];
-    _preTaxSum = 0.f ;
+    
+    [self.lasts removeAllObjects] ;
+    
+    SalaryConfig.salary = [self.salaryTF.text floatValue];
+    SalaryConfig.special = [self.specialTF.text floatValue] ;
+    SalaryConfig.insurance = [self.insuranceTF.text floatValue] ;
+    SalaryConfig.houseFund = [self.houseFundTF.text floatValue] ;
+    SalaryConfig.taxBase = 5000 ;
+
+    [self dataHandler] ;
     [self.tableView reloadData];
 }
 
+- (void)dataHandler{
+
+    NSInteger month = 1 ;
+    MonthTax * pre = nil ;
+    while (month <= 12) {
+        pre = [MonthTax fetchMonthTaxBy:month prefore:pre] ;
+        [self.lasts addObject:pre];
+        month ++ ;
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 54 ;
+    return 156 ;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 12 ;
+    return self.lasts.count ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     TaxCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell.periodlb.text = [NSString stringWithFormat:@"第%ld期",indexPath.row + 1];
     
-    
-    CGFloat f =  ([self.salaryTF.text floatValue] - 5000 - [self.insuranceTF.text floatValue] - [self.reserveFundTF.text floatValue] - [self.specialTF.text floatValue]) * (indexPath.row + 1 );
-    cell.taxSumlb.text = [NSString stringWithFormat:@"累计预扣预缴应纳税所得额:%.1f" ,f];
-    cell.taxlb.text = [NSString stringWithFormat:@"交税%.1f" ,[self taxOfMonth:indexPath.row + 1]];
-    cell.fastCaculatelb.text = [NSString stringWithFormat:@"速算扣除:%.f" ,_fastCaculate];
-    cell.taxRatelb.text = [NSString stringWithFormat:@"税率:%.0f%%",_rate * 100];
+    MonthTax * monthTax = self.lasts[indexPath.row] ;
 
+    cell.periodlb.text = [NSString stringWithFormat:@"第%ld期",indexPath.row + 1];
+    cell.taxSumlb.text = [NSString stringWithFormat:@"累计预扣预缴应纳税所得额:%.1f" ,monthTax.level.pureIncomeSum];
+    cell.taxlb.text = [NSString stringWithFormat:@"交税%.1f" ,monthTax.tax];
+    cell.fastCaculatelb.text = [NSString stringWithFormat:@"速算扣除:%.f" ,monthTax.level.fastCaculate];
+    cell.taxRatelb.text = [NSString stringWithFormat:@"税率:%.2f%%",monthTax.level.rate];
+    
     return cell ;
 }
-
-- (CGFloat)taxOfMonth:(NSInteger)month {
-    
-    if (month == 0) return  0 ;
-    
-    CGFloat f =  ([self.salaryTF.text floatValue] - 5000 - [self.insuranceTF.text floatValue] - [self.reserveFundTF.text floatValue] - [self.specialTF.text floatValue]) * month;
-    
-    if (f <= 36000.0 ) {
-        _rate = 0.03 ;
-        _fastCaculate = 0  ;
-    }else if (f > 36000.0 && f <= 144000.0) {
-        _rate = 0.1 ;
-        _fastCaculate = 2520  ;
+- (NSMutableArray<MonthTax *> *)lasts {
+    if (!_lasts) {
+        _lasts = [NSMutableArray array] ;
     }
-    else if (f > 144000.0 && f <= 300000.0) {
-        _rate = 0.2 ;
-        _fastCaculate = 16920  ;
-    }
-    else if (f > 300000.0 && f <= 420000.0) {
-        _rate = 0.25 ;
-        _fastCaculate = 31920  ;
-    }
-    else if (f > 420000.0 && f <= 660000.0) {
-        _rate = 0.3 ;
-        _fastCaculate = 52920  ;
-    }
-    else if (f > 660000.0 && f <= 960000.0) {
-        _rate = 0.35 ;
-        _fastCaculate = 85920  ;
-    }
-    else if (f > 960000.0) {
-        _rate = 0.45 ;
-        _fastCaculate = 181920  ;
-    }
-    
-    CGFloat pre =  (f * _rate - _fastCaculate - _preTaxSum);
-    _preTaxSum += pre;
-    return pre ;
-    
-//        CGFloat preTaxSum = 0 ;
-//        for (NSInteger i = month - 1; i >= 0; i --) {
-//
-//            preTaxSum += [self taxOfMonth:i];
-//        }
-//        return f * rate - fastCaculate  - preTaxSum ;
-    
+    return _lasts ;
 }
+
+
 @end
+
